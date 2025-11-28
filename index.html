@@ -4,9 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Hokkaido 2025</title>
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script src="https://unpkg.com/lucide@0.554.0/umd/lucide.js"></script>
+    <script>
+      // 將 Lucide-React 的 icons 移到全域變數，供 App.js 呼叫
+      const lucideReact = lucide;
+    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -40,17 +51,7 @@
         scrollbar-width: none;
       }
     </style>
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
-  }
-}
-</script>
-</head>
+    </head>
   <body>
     <div id="root"></div>
 
@@ -68,8 +69,9 @@
       const ExpenseTracker = () => <div>請放入 ExpenseTracker.js 的內容。</div>;
       const InfoView = () => <div>請放入 InfoView.js 的內容。</div>;
 
-      // 由於 App.js.txt 使用了 ES6 解構賦值，我們手動將其變更為全域變數引用 (由 importmap 提供)。
+      // React 和 Lucide-React 的變數 (現在由傳統 CDN 提供，並全域可用)
       const { useState, useEffect } = React;
+      // 確保使用正確的全域變數 (現在是 lucideReact，而不是之前 importmap 裡的 lucide-react)
       const { MapPin, Clock, Train, Utensils, Camera, Hotel, X, Navigation, Wallet, Info, Calendar, ChevronRight } = lucideReact;
 
       // --- 2. App.js 內容 (已移除 import/export) ---
