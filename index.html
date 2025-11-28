@@ -54,8 +54,9 @@
       
       const { useState, useEffect, useMemo } = React;
       
-      // 📌 修正點 1: 從 window 取得 LucideReact 變數，並設置一個空對象作為備援，以解決 Babel/UMD Scoping 錯誤
-      const LucideIcons = window.LucideReact || {};
+      // 📌 修正點 1: 移除錯誤的 || {} 備援，直接從 window 取得 LucideReact 變數。
+      // 由於 UMD 腳本已在上方載入，此時 window.LucideReact 應已存在，避免解構出 undefined 的組件。
+      const LucideIcons = window.LucideReact; 
       
       const { MapPin, Clock, Train, Utensils, Camera, Hotel, X, Navigation, Wallet, Info, Calendar, ChevronRight, Plus, Trash2, Divide, Calculator, CreditCard, DollarSign, CloudRain, CloudSnow, Sun, Cloud, Thermometer, Plane, Phone, ShieldAlert } = LucideIcons;
 
