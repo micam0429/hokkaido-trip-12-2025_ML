@@ -1,0 +1,7 @@
+{
+  "name": "hokkaido-12-2025-1",
+  "description": "A mobile-first digital itinerary for the Hokkaido 2025 trip, featuring expense tracking, live weather, and detailed travel cards.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
