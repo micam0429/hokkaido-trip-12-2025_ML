@@ -6,11 +6,8 @@
     <title>Hokkaido 2025</title>
     
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    
     <meta name="apple-mobile-web-app-capable" content="yes">
-    
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    
     <meta name="apple-mobile-web-app-title" content="Hokkaido 2025">
 
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -62,15 +59,16 @@
       
       const { useState, useEffect, useMemo } = React;
       
-      // 📌 防禦性載入策略：確保即使 CDN 載入延遲，程式也不會拋出 TypeError
+      // 📌 防禦性載入策略：當 Lucide Icons 載入失敗時，使用 NullIcon 避免程式崩潰
       const NullIcon = ({ size, className }) => <div className={`${className || ''}`} style={{ width: size, height: size }}></div>;
       
       let MapPin = NullIcon, Clock = NullIcon, Train = NullIcon, Utensils = NullIcon, Camera = NullIcon, Hotel = NullIcon, X = NullIcon, Navigation = NullIcon, Wallet = NullIcon, Info = NullIcon, Calendar = NullIcon, ChevronRight = NullIcon, Plus = NullIcon, Trash2 = NullIcon, Divide = NullIcon, Calculator = NullIcon, CreditCard = NullIcon, DollarSign = NullIcon, CloudRain = NullIcon, CloudSnow = NullIcon, Sun = NullIcon, Cloud = NullIcon, Thermometer = NullIcon, Plane = NullIcon, Phone = NullIcon, ShieldAlert = NullIcon;
       
+      // 檢查 LucideReact 是否透過 CDN 成功載入到全域 window 物件
       const LucideIcons = window.LucideReact;
 
       if (LucideIcons) {
-          // 只有當 window.LucideReact 存在時，才進行解構覆蓋
+          // 只有當 window.LucideReact 存在時，才進行解構覆蓋，此時所有的圖標都是 React 組件
           ({ 
               MapPin, Clock, Train, Utensils, Camera, Hotel, X, Navigation, Wallet, Info, Calendar, ChevronRight, Plus, Trash2, Divide, Calculator, CreditCard, DollarSign, CloudRain, CloudSnow, Sun, Cloud, Thermometer, Plane, Phone, ShieldAlert 
           } = LucideIcons);
@@ -572,9 +570,9 @@
         }
       ];
 
-      // --- 2. 組件內容 (已移除 import/export 和 TypeScript 語法) ---
+      // --- 2. 組件內容 ---
       
-      // InfoView (從 InfoView.tsx 整合)
+      // InfoView (包含住宿、航班、緊急聯絡資訊)
       const InfoView = () => {
         return (
           <div className="space-y-6 pb-24">
@@ -677,7 +675,7 @@
         );
       };
       
-      // WeatherWidget (從 WeatherWidget.tsx 整合)
+      // WeatherWidget
       const WeatherWidget = ({ lat, lng, city }) => {
         const [weather, setWeather] = useState(null);
         const [loading, setLoading] = useState(true);
@@ -765,7 +763,7 @@
         );
       };
       
-      // ExpenseTracker (從 ExpenseTracker.tsx 整合)
+      // ExpenseTracker
       const ExpenseTracker = () => {
         const [expenses, setExpenses] = useState([]);
         const [title, setTitle] = useState('');
@@ -843,21 +841,17 @@
                   onChange={(e) => setTitle(e.target.value)}
                 />
                 
-                {/* 💥 修正點: 將並排 (flex gap-2) 改為上下堆疊 (space-y-3) */}
                 <div className="space-y-3">
                   <input 
                     type="number" 
                     placeholder="總金額 ¥" 
-                    // 修正: 確保全寬 (w-full) 並使用標準內邊距
                     className="w-full p-3 bg-stone-50 rounded-xl border-none focus:ring-2 focus:ring-hokkaido-blue outline-none"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                   />
                   <input 
                     type="text" 
-                    // 修正: 使用縮短的 placeholder
                     placeholder="付款方式" 
-                    // 修正: 確保全寬 (w-full) 並使用標準內邊距
                     className="w-full p-3 bg-stone-50 rounded-xl border-none focus:ring-2 focus:ring-hokkaido-blue outline-none"
                     value={paymentMethod}
                     onChange={(e) => setPaymentMethod(e.target.value)}
@@ -1062,7 +1056,7 @@
               {/* Footer Actions */}
               <div className="p-4 border-t border-stone-100 bg-stone-50 shrink-0">
                 <a 
-                  // 💥 修正點: 修正 Google Map 連結，確保導航正確
+                  // 修正 Google Map 連結
                   href={`https://maps.google.com/maps?q=${encodeURIComponent(item.location + ' Hokkaido')}`}
                   target="_blank"
                   rel="noreferrer"
