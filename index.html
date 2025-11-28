@@ -12,8 +12,8 @@
     
     <script src="https://unpkg.com/lucide@0.554.0/umd/lucide.js"></script>
     <script>
-      // 將 Lucide-React 的 icons 移到全域變數，供 App.js 呼叫
-      const lucideReact = lucide;
+      // 關鍵修正：使用 var 確保變數在全域範圍內可用
+      var lucideReact = lucide; 
     </script>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -51,7 +51,7 @@
         scrollbar-width: none;
       }
     </style>
-    </head>
+</head>
   <body>
     <div id="root"></div>
 
@@ -69,9 +69,9 @@
       const ExpenseTracker = () => <div>請放入 ExpenseTracker.js 的內容。</div>;
       const InfoView = () => <div>請放入 InfoView.js 的內容。</div>;
 
-      // React 和 Lucide-React 的變數 (現在由傳統 CDN 提供，並全域可用)
+      // React 和 Lucide-React 的變數
       const { useState, useEffect } = React;
-      // 確保使用正確的全域變數 (現在是 lucideReact，而不是之前 importmap 裡的 lucide-react)
+      // 現在 lucideReact 已確保是全域變數，可以正常解構
       const { MapPin, Clock, Train, Utensils, Camera, Hotel, X, Navigation, Wallet, Info, Calendar, ChevronRight } = lucideReact;
 
       // --- 2. App.js 內容 (已移除 import/export) ---
@@ -198,8 +198,9 @@
       const App = () => {
         const [activeTab, setActiveTab] = useState(Tab.Itinerary);
         const [selectedDay, setSelectedDay] = useState(1);
-        const [selectedItem, setSelectedItem] = useState(null);
-        const currentDayPlan = ITINERARY_DATA.find(d => d.day === selectedDay) || ITINERARY_DATA[0];
+        const [selectedItem, setSelectedItem] = null);
+        // 這行程式碼可能會在 ITINERARY_DATA 載入之前失敗，這是下一個要處理的錯誤
+        const currentDayPlan = ITINERARY_DATA.find(d => d.day === selectedDay) || ITINERARY_DATA[0]; 
         
         useEffect(() => {
           // Scroll to top when day changes
